@@ -1,0 +1,188 @@
+{
+  "site": "Ancotanga, Oruro, Bolivia",
+  "hours": 175320,
+  "years": 20.0,
+  "real_data": true,
+  "specific_yield_kwh_per_kwp_yr": 2117,
+  "ghi_kwh_m2_day": 6.38,
+  "hours_below_0C_air_per_yr": 802,
+  "coldest_air_C": -8.9,
+  "battery_hours_below_0C_per_yr": {
+    "Outdoor metal cabinet": 520,
+    "Insulated adobe room": 1,
+    "Earth vault (1 m deep)": 0
+  },
+  "soil_annual_damping_depth_m": 2.24,
+  "annual_demand_kwh": 13755,
+  "peak_kw": 4.24,
+  "picks": {
+    "priority": {
+      "pv_kw": 10,
+      "batt_kwh": 40,
+      "mode": "priority",
+      "annual_cost": 6002.7206,
+      "critical_rel": 1.0,
+      "rel_Water pump": 1.0,
+      "rel_Health post": 1.0,
+      "rel_School": 0.9999,
+      "rel_Homes": 0.9976,
+      "energy_Water pump": 1.0,
+      "energy_Health post": 1.0,
+      "energy_School": 0.9999,
+      "energy_Homes": 0.9959
+    },
+    "equal": {
+      "pv_kw": 10,
+      "batt_kwh": 40,
+      "mode": "equal",
+      "annual_cost": 6002.7206,
+      "critical_rel": 0.9988,
+      "rel_Water pump": 1.0,
+      "rel_Health post": 0.9988,
+      "rel_School": 1.0,
+      "rel_Homes": 0.9982,
+      "energy_Water pump": 1.0,
+      "energy_Health post": 0.9996,
+      "energy_School": 1.0,
+      "energy_Homes": 0.9969
+    }
+  },
+  "cost_saving_pct": 0.0,
+  "housing_effect": {
+    "Outdoor metal cabinet": {
+      "critical_rel": 1.0,
+      "homes_rel": 0.9975,
+      "solar_wasted_cold_kwh_yr": 237
+    },
+    "Insulated adobe room": {
+      "critical_rel": 1.0,
+      "homes_rel": 0.9976,
+      "solar_wasted_cold_kwh_yr": 3
+    },
+    "Earth vault (1 m deep)": {
+      "critical_rel": 1.0,
+      "homes_rel": 0.9976,
+      "solar_wasted_cold_kwh_yr": 0
+    }
+  },
+  "monte_carlo": {
+    "priority": {
+      "median": 1.0,
+      "p5": 0.9397,
+      "min": 0.8877,
+      "no_failure_min": 1.0,
+      "no_failure_median": 1.0,
+      "school_median": 1.0,
+      "homes_median": 0.905
+    },
+    "equal": {
+      "median": 0.9524,
+      "p5": 0.8875,
+      "min": 0.813,
+      "no_failure_min": 0.8783,
+      "no_failure_median": 0.957,
+      "school_median": 1.0,
+      "homes_median": 0.9334
+    },
+    "backup": {
+      "median": 1.0,
+      "p5": 1.0,
+      "min": 1.0,
+      "no_failure_min": 1.0,
+      "no_failure_median": 1.0,
+      "school_median": 1.0,
+      "homes_median": 0.905
+    },
+    "runs_with_inverter_failure": 99,
+    "corr_equal_crit_vs_growth": -0.912
+  },
+  "demand_growth": {
+    "growth": [
+      1.0,
+      1.1,
+      1.2,
+      1.3,
+      1.4,
+      1.5,
+      1.6
+    ],
+    "critical": {
+      "priority": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "equal": [
+        0.9988,
+        0.9966,
+        0.9916,
+        0.9725,
+        0.9433,
+        0.9197,
+        0.9195
+      ]
+    },
+    "homes": {
+      "priority": [
+        0.9976,
+        0.9934,
+        0.9817,
+        0.9383,
+        0.8889,
+        0.8931,
+        0.8635
+      ],
+      "equal": [
+        0.9982,
+        0.9952,
+        0.9881,
+        0.9612,
+        0.92,
+        0.8867,
+        0.8864
+      ]
+    }
+  },
+  "worst_week_ending": "2017-05-30",
+  "worst_week_served_pct": {
+    "Water pump": 100.0,
+    "Health post": 100.0,
+    "School": 100.0,
+    "Homes": 89.1
+  },
+  "economics": {
+    "solar_capex": 43021,
+    "solar_lcoe": 0.438,
+    "diesel_lcoe": 1.0,
+    "diesel_liters_avoided_per_yr": 6190,
+    "co2_avoided_t_per_yr": 16.6,
+    "capex_per_household": 717,
+    "breakeven_diesel_price": 0.4
+  },
+  "sensitivity": {
+    "Battery price +/-30%": [
+      0.386,
+      0.49
+    ],
+    "Panel price +/-30%": [
+      0.414,
+      0.462
+    ],
+    "Discount rate 5% / 12%": [
+      0.372,
+      0.534
+    ],
+    "Battery life 14 / 7 yr": [
+      0.423,
+      0.493
+    ],
+    "Wiring per home +/-30%": [
+      0.398,
+      0.478
+    ]
+  }
+}

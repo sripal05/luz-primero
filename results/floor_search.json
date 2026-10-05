@@ -1,0 +1,49 @@
+{
+  "combinations_per_scenario": 66,
+  "selection_rule": "max homes uptime in stress year s.t. pump+clinic >= 0.9999",
+  "optimizer_pick": {
+    "school_floor": 0.15,
+    "homes_floor": 0.15
+  },
+  "config_matches_pick": true,
+  "shared_grid": {
+    "Typical year": {
+      "critical": 0.9988,
+      "homes": 0.9982
+    },
+    "Stress year": {
+      "critical": 0.874,
+      "homes": 0.8221
+    }
+  },
+  "by_homes_floor": {
+    "Typical year": {
+      "15%": {
+        "critical": 1.0,
+        "homes": 0.9976
+      },
+      "30%": {
+        "critical": 1.0,
+        "homes": 0.984
+      },
+      "45%": {
+        "critical": 1.0,
+        "homes": 0.9037
+      }
+    },
+    "Stress year": {
+      "15%": {
+        "critical": 1.0,
+        "homes": 0.8332
+      },
+      "30%": {
+        "critical": 1.0,
+        "homes": 0.7654
+      },
+      "45%": {
+        "critical": 1.0,
+        "homes": 0.7498
+      }
+    }
+  }
+}
