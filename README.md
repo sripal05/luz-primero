@@ -130,7 +130,6 @@ The tests caught a real bug: the first version stopped all battery charging whil
 - Holmgren, Hansen & Mikofski (2018). pvlib python. *Journal of Open Source Software* 3(29), 884
 - ESMAP / World Bank (2022). *Mini Grids for Half a Billion People*
 
-## AI use
 
 ## AI use
 
