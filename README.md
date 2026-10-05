@@ -132,7 +132,13 @@ The tests caught a real bug: the first version stopped all battery charging whil
 
 ## AI use
 
-We used Claude (Anthropic) to help write and debug this code, find sources, and draft documentation. We chose the site, downloaded the data, checked the assumptions, ran the simulations, and interpreted the results.
+## AI use
+
+We used Claude (Anthropic) to brainstorm the project direction and site selection,
+find and check sources, and draft the slides. An earlier version of our simulation,
+which produced the figures and results in our pitch deck, was written with Claude's
+help. We then wrote our own implementation of the model, published in this repository,
+and can explain every assumption and result.
 
 ## License
 
