@@ -2,122 +2,89 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Interactive results from the Luz Primero solar microgrid simulation for Ancotanga, Bolivia.">
-<style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
-<title>Luz Primero Simulator</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Interactive results from the Pump Priority solar microgrid simulation for Ancotanga, Bolivia.">
+<title>Pump Priority Simulator</title>
 <style>
-/* Layout: one narrow column of three "experiments"; each pairs controls + live readouts with a chart. */
 :root {
-  --bg: #F5F6F8;
-  --surface: #FFFFFF;
-  --ink: #17202E;
-  --ink-2: #4E5868;
-  --line: #DEE2E8;
-  --ranked: #2A6FCC;
-  --shared: #D45F2A;
-  --homes: #B77E00;
-  --sun: #E9A21F;
-  --display: 'Source Serif 4', Georgia, serif;
-  --body: 'IBM Plex Sans', 'Segoe UI', Arial, sans-serif;
-  --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #11161E; --surface: #19202B; --ink: #E8ECF2; --ink-2: #A3ADBC; --line: #2C3544;
-    --ranked: #5A9AF0; --shared: #EC7E4E; --homes: #E3AE3F; --sun: #F0B640; color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #11161E; --surface: #19202B; --ink: #E8ECF2; --ink-2: #A3ADBC; --line: #2C3544;
-  --ranked: #5A9AF0; --shared: #EC7E4E; --homes: #E3AE3F; --sun: #F0B640; color-scheme: dark;
+  --paper: #ffffff;
+  --ink: #111111;
+  --muted: #555555;
+  --line: #cccccc;
+  --ranked: #1f5fbf;
+  --shared: #c8341f;
+  --homes: #2e7d32;
+  --mark: #777777;
 }
 * { box-sizing: border-box; }
-body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.5; }
-.wrap { max-width: 980px; margin: 0 auto; padding-inline: 20px; padding-block: 40px 56px; display: flex; flex-direction: column; gap: 40px; }
-header { display: flex; flex-direction: column; gap: 12px; }
-.eyebrow { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--sun); font-weight: 600; }
-h1 { font-family: var(--display); font-weight: 600; font-size: clamp(34px, 6vw, 54px); line-height: 1.05; margin: 0; text-wrap: balance; }
-.lede { font-size: 18px; color: var(--ink-2); max-width: 62ch; margin: 0; }
-.facts { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 14px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
-.facts b { color: var(--ink); font-weight: 600; }
-section.exp { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 18px; }
-.exp-head { display: flex; flex-direction: column; gap: 6px; }
-.exp-head .tag { font-family: var(--mono); font-size: 12px; color: var(--ink-2); letter-spacing: .06em; text-transform: uppercase; }
-h2 { font-family: var(--display); font-weight: 600; font-size: 26px; line-height: 1.2; margin: 0; text-wrap: balance; }
-.exp-head p { margin: 0; color: var(--ink-2); max-width: 64ch; }
-.grid { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 24px; align-items: start; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.5; font-variant-numeric: tabular-nums; }
+.wrap { max-width: 920px; margin: 0 auto; padding: 32px 20px 56px; }
+h1 { font-size: 34px; font-weight: 700; margin: 0 0 10px; line-height: 1.15; }
+h2 { font-size: 22px; font-weight: 700; margin: 0 0 6px; line-height: 1.25; }
+h3 { font-size: 16px; font-weight: 700; margin: 0 0 8px; }
+p { margin: 0 0 10px; }
+.lede { max-width: 66ch; }
+.small { font-size: 14px; color: var(--muted); }
+section { border-top: 1px solid var(--line); margin-top: 32px; padding-top: 24px; }
+.tag { font-size: 14px; color: var(--muted); margin: 0 0 4px; }
+.grid { display: grid; grid-template-columns: minmax(0, 290px) minmax(0, 1fr); gap: 28px; align-items: start; margin-top: 16px; }
 @media (max-width: 760px) { .grid { grid-template-columns: minmax(0, 1fr); } }
-.controls { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
-.ctl { display: flex; flex-direction: column; gap: 6px; }
-.ctl label { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; font-weight: 500; }
-.ctl output { font-family: var(--mono); font-variant-numeric: tabular-nums; color: var(--ink); }
-input[type=range] { width: 100%; accent-color: var(--sun); height: 28px; }
-input[type=range]:focus-visible { outline: 2px solid var(--sun); outline-offset: 3px; border-radius: 4px; }
-.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; gap: 3px; align-self: start; }
-.seg button { font: inherit; font-size: 13px; border: 0; background: transparent; color: var(--ink-2); padding: 6px 12px; border-radius: 999px; cursor: pointer; }
-.seg button[aria-pressed="true"] { background: var(--ink); color: var(--surface); }
-.seg button:focus-visible, .reset:focus-visible { outline: 2px solid var(--sun); outline-offset: 2px; }
-.reset { font: inherit; font-size: 13px; align-self: start; background: transparent; border: 1px solid var(--line); color: var(--ink); padding: 6px 12px; border-radius: 8px; cursor: pointer; }
-.read { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.stat { border-top: 1px solid var(--line); padding-top: 8px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.stat .k { font-size: 12px; color: var(--ink-2); line-height: 1.3; }
-.stat .v { font-family: var(--mono); font-size: 24px; font-variant-numeric: tabular-nums; line-height: 1.15; }
-.stat .v.ranked { color: var(--ranked); } .stat .v.shared { color: var(--shared); } .stat .v.homes { color: var(--homes); }
-.verdict { font-size: 14px; line-height: 1.45; background: var(--bg); border-radius: 10px; padding: 10px 12px; margin: 0; }
-.chart { min-width: 0; display: flex; flex-direction: column; gap: 8px; }
-.chart svg { width: 100%; height: auto; display: block; overflow: visible; }
-.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--ink-2); }
+.controls { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.ctl label { display: flex; justify-content: space-between; gap: 8px; font-weight: 500; margin-bottom: 4px; }
+.ctl output { font-weight: 700; }
+input[type=range] { width: 100%; accent-color: var(--ranked); }
+fieldset { border: 0; padding: 0; margin: 0; display: flex; gap: 16px; }
+fieldset label { display: flex; align-items: center; gap: 6px; }
+button { font: inherit; background: var(--paper); color: var(--ink); border: 1px solid var(--ink); padding: 6px 10px; cursor: pointer; align-self: start; }
+button:hover { background: #f0f0f0; }
+.read { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.stat .k { display: block; font-size: 13px; color: var(--muted); line-height: 1.3; }
+.stat .v { display: block; font-size: 24px; font-weight: 700; line-height: 1.2; }
+.v.ranked { color: var(--ranked); } .v.shared { color: var(--shared); } .v.homes { color: var(--homes); }
+.verdict { font-size: 15px; margin: 0; }
+.chart { min-width: 0; }
+.chart svg { width: 100%; height: auto; display: block; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; color: var(--muted); margin-top: 6px; }
 .legend span { display: inline-flex; align-items: center; gap: 6px; }
-.legend i { width: 18px; height: 0; border-top: 2.5px solid currentColor; display: inline-block; }
+.legend i { width: 18px; border-top: 3px solid currentColor; display: inline-block; }
 .legend i.dash { border-top-style: dashed; }
-.evidence { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.evidence { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 16px; }
 @media (max-width: 760px) { .evidence { grid-template-columns: minmax(0, 1fr); } }
-.ev { display: flex; flex-direction: column; gap: 10px; }
-.ev h3 { font-size: 15px; margin: 0; font-weight: 600; }
-.bars { display: flex; flex-direction: column; gap: 6px; }
-.bar { display: grid; grid-template-columns: 112px 1fr 52px; gap: 8px; align-items: center; font-size: 13px; color: var(--ink-2); }
-.bar .track { height: 10px; background: var(--bg); border-radius: 0 4px 4px 0; overflow: hidden; }
-.bar .fill { height: 100%; border-radius: 0 4px 4px 0; }
-.bar .n { font-family: var(--mono); color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
-footer { font-size: 13px; color: var(--ink-2); display: flex; flex-direction: column; gap: 6px; border-top: 1px solid var(--line); padding-top: 16px; }
-footer p { margin: 0; max-width: 80ch; }
-svg text { font-family: var(--body); font-size: 12px; fill: var(--ink-2); }
-svg .grid-l { stroke: var(--line); stroke-width: 1; }
-svg .axis-t { font-family: var(--mono); font-size: 11px; }
-@media (prefers-reduced-motion: no-preference) { .stat .v { transition: color .2s; } }
+.bars { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+.bar { display: grid; grid-template-columns: 96px 1fr 48px; gap: 8px; align-items: center; font-size: 13px; }
+.bar .track { height: 10px; background: #eeeeee; }
+.bar .fill { display: block; height: 100%; }
+.bar .n { text-align: right; font-weight: 700; }
+footer { border-top: 1px solid var(--line); margin-top: 32px; padding-top: 16px; }
+footer p { font-size: 13px; color: var(--muted); max-width: 80ch; }
+svg text { font-family: inherit; font-size: 12px; fill: #444; }
+svg .grid-l { stroke: #dddddd; stroke-width: 1; }
 </style>
-
 </head>
 <body>
 <div class="wrap">
+
 <header>
-  <div class="eyebrow">Altiplano Power Lab · Caltech EWB 2026</div>
-  <h1>Luz Primero Simulator</h1>
-  <p class="lede">Explore our solar microgrid for Ancotanga, Bolivia. Every number below comes from simulating the grid hour by hour across 20 years of NASA satellite weather. Move the sliders to see how a community-ranked grid compares to a standard shared one.</p>
-  <div class="facts"><span><b>3,730 m</b> altitude</span><span><b>175,320</b> hours of weather</span><span><b>60</b> homes, a water pump, a health post, a school</span><span><b>802 h/yr</b> below 0 °C</span></div>
+  <h1>Pump Priority Simulator</h1>
+  <p class="lede">Interactive results from our solar microgrid simulation for Ancotanga, Bolivia. Each number comes from running the grid hour by hour over 20 years of NASA weather. Move the sliders to compare a community-ranked grid with a standard shared grid!!!</p>
+  <p class="small">Altitude 3,730 m. 175,320 hours of weather. 60 homes, a water pump, a clinic, and a school. 802 hours a year below 0 °C. All results are predictions from our simulation, not measurements from Ancotanga.</p>
 </header>
 
-<section class="exp" aria-labelledby="h-growth">
-  <div class="exp-head">
-    <span class="tag">Experiment 1 · Demand growth</span>
-    <h2 id="h-growth">What happens as families use more power?</h2>
-    <p>After electrification, households buy lights, TVs and fridges. Same hardware in both grids: 10 kW of panels and a 40 kWh battery.</p>
-  </div>
+<section aria-labelledby="h-growth">
+  <p class="tag">Experiment 1: Demand growth</p>
+  <h2 id="h-growth">What happens as families use more power?</h2>
+  <p class="small">After receiving a more constant stream of electricity, consumers will buy more electric appliances (e.g., TVs, lights, etc.). Both grids use the same hardware: 10 kW of panels and a 40 kWh battery.</p>
   <div class="grid">
     <div class="controls">
       <div class="ctl">
-        <label for="g">Household demand growth <output id="g-out" for="g">+0%</output></label>
+        <label for="g">Household demand growth <output id="g-out" for="g">+30%</output></label>
         <input type="range" id="g" min="0" max="60" step="5" value="30">
       </div>
       <div class="read">
-        <div class="stat"><span class="k">Pump + clinic, ranked</span><span class="v ranked" id="g-cr">–</span></div>
-        <div class="stat"><span class="k">Pump + clinic, shared</span><span class="v shared" id="g-cs">–</span></div>
-        <div class="stat"><span class="k">Homes, ranked</span><span class="v homes" id="g-hr">–</span></div>
-        <div class="stat"><span class="k">Homes, shared</span><span class="v homes" id="g-hs">–</span></div>
+        <div class="stat"><span class="k">Pump + clinic, ranked</span><span class="v ranked" id="g-cr"></span></div>
+        <div class="stat"><span class="k">Pump + clinic, shared</span><span class="v shared" id="g-cs"></span></div>
+        <div class="stat"><span class="k">Homes, ranked</span><span class="v homes" id="g-hr"></span></div>
+        <div class="stat"><span class="k">Homes, shared</span><span class="v homes" id="g-hs"></span></div>
       </div>
       <p class="verdict" id="g-say"></p>
     </div>
@@ -133,47 +100,44 @@ svg .axis-t { font-family: var(--mono); font-size: 11px; }
   </div>
 </section>
 
-<section class="exp" aria-labelledby="h-floor">
-  <div class="exp-head">
-    <span class="tag">Experiment 2 · Cut-off level</span>
-    <h2 id="h-floor">Where should homes be cut off?</h2>
-    <p>When the battery falls to the cut-off level, homes and the school lose power so the rest is saved for the pump and clinic. We tested every level from 10% to 60%.</p>
-  </div>
+<section aria-labelledby="h-floor">
+  <p class="tag">Experiment 2: Cut-off level</p>
+  <h2 id="h-floor">Where should homes be cut off?</h2>
+  <p class="small">When the battery falls to the cut-off level, homes and the school lose power so the rest is saved for the pump and clinic. We tested every level from 10% to 60%.</p>
   <div class="grid">
     <div class="controls">
-      <div class="seg" role="group" aria-label="Scenario">
-        <button type="button" id="sc-typ" aria-pressed="false">Typical year</button>
-        <button type="button" id="sc-str" aria-pressed="true">Stress year</button>
-      </div>
+      <fieldset>
+        <legend class="small" style="margin-bottom:4px">Scenario</legend>
+        <label><input type="radio" name="sc" value="Typical year"> Typical year</label>
+        <label><input type="radio" name="sc" value="Stress year" checked> Stress year</label>
+      </fieldset>
       <div class="ctl">
         <label for="f">Cut homes off at <output id="f-out" for="f">15%</output></label>
         <input type="range" id="f" min="10" max="60" step="5" value="15">
       </div>
       <div class="read">
-        <div class="stat"><span class="k">Pump + clinic</span><span class="v ranked" id="f-c">–</span></div>
-        <div class="stat"><span class="k">Homes</span><span class="v homes" id="f-h">–</span></div>
-        <div class="stat"><span class="k">Shared grid, pump + clinic</span><span class="v shared" id="f-sc">–</span></div>
-        <div class="stat"><span class="k">Shared grid, homes</span><span class="v shared" id="f-sh">–</span></div>
+        <div class="stat"><span class="k">Pump + clinic</span><span class="v ranked" id="f-c"></span></div>
+        <div class="stat"><span class="k">Homes</span><span class="v homes" id="f-h"></span></div>
+        <div class="stat"><span class="k">Shared grid, pump + clinic</span><span class="v shared" id="f-sc"></span></div>
+        <div class="stat"><span class="k">Shared grid, homes</span><span class="v shared" id="f-sh"></span></div>
       </div>
       <p class="verdict" id="f-say"></p>
     </div>
     <div class="chart">
       <svg id="f-svg" viewBox="0 0 560 320" role="img" aria-label="Line chart of homes uptime versus cut-off level, with shared-grid reference line"></svg>
       <div class="legend">
-        <span style="color:var(--homes)"><i></i>Homes, ranked</span>
-        <span style="color:var(--shared)"><i class="dash"></i>Homes, shared grid</span>
-        <span style="color:var(--ink-2)">Stress year: 15-year-old panels, heavy dust, battery at 82%, +50% demand</span>
+        <span style="color:var(--homes)"><i></i>Ranked grid</span>
+        <span style="color:var(--shared)"><i class="dash"></i>Shared grid</span>
       </div>
+      <p class="small" style="margin-top:6px">The chart shows homes uptime. Stress year: 15-year-old panels, heavy dust, battery at 82%, and +50% demand.</p>
     </div>
   </div>
 </section>
 
-<section class="exp" aria-labelledby="h-size">
-  <div class="exp-head">
-    <span class="tag">Experiment 3 · System size</span>
-    <h2 id="h-size">How big does the system need to be?</h2>
-    <p>Pick a panel and battery size. We simulated all 120 combinations at today's demand. Smaller systems are where the ranking matters most.</p>
-  </div>
+<section aria-labelledby="h-size">
+  <p class="tag">Experiment 3: System size</p>
+  <h2 id="h-size">How big does the system need to be?</h2>
+  <p class="small">Pick a panel size and a battery size. We simulated all 120 combinations at today's demand.</p>
   <div class="grid">
     <div class="controls">
       <div class="ctl">
@@ -184,12 +148,12 @@ svg .axis-t { font-family: var(--mono); font-size: 11px; }
         <label for="b">Battery <output id="b-out" for="b">40 kWh</output></label>
         <input type="range" id="b" min="0" max="11" step="1" value="3">
       </div>
-      <button type="button" class="reset" id="s-reset">Back to our design (10 kW, 40 kWh)</button>
+      <button type="button" id="s-reset">Back to our design (10 kW, 40 kWh)</button>
       <div class="read">
-        <div class="stat"><span class="k">Cost per year, all-in</span><span class="v" id="s-cost">–</span></div>
-        <div class="stat"><span class="k">Homes, ranked</span><span class="v homes" id="s-h">–</span></div>
-        <div class="stat"><span class="k">Pump + clinic, ranked</span><span class="v ranked" id="s-cr">–</span></div>
-        <div class="stat"><span class="k">Pump + clinic, shared</span><span class="v shared" id="s-cs">–</span></div>
+        <div class="stat"><span class="k">Cost per year, all in</span><span class="v" id="s-cost"></span></div>
+        <div class="stat"><span class="k">Homes, ranked</span><span class="v homes" id="s-h"></span></div>
+        <div class="stat"><span class="k">Pump + clinic, ranked</span><span class="v ranked" id="s-cr"></span></div>
+        <div class="stat"><span class="k">Pump + clinic, shared</span><span class="v shared" id="s-cs"></span></div>
       </div>
       <p class="verdict" id="s-say"></p>
     </div>
@@ -198,29 +162,53 @@ svg .axis-t { font-family: var(--mono); font-size: 11px; }
       <div class="legend">
         <span style="color:var(--ranked)"><i></i>Pump + clinic, ranked</span>
         <span style="color:var(--shared)"><i></i>Pump + clinic, shared</span>
-        <span style="color:var(--ink-2)">At the selected panel size</span>
       </div>
+      <p class="small" style="margin-top:6px">Shown at the selected panel size.</p>
     </div>
   </div>
 </section>
 
-<section class="exp" aria-labelledby="h-ev">
-  <div class="exp-head">
-    <span class="tag">More results</span>
-    <h2 id="h-ev">Stress tests, cold and cost</h2>
-  </div>
+<section aria-labelledby="h-ev">
+  <h2 id="h-ev">Stress tests, cold, and cost</h2>
   <div class="evidence" id="ev"></div>
 </section>
 
 <footer>
-  <p><b>Method.</b> NASA POWER hourly weather (2005 to 2024) at lat −17.77, lon −67.44. Panel physics with pvlib (Erbs, Hay-Davies, Faiman models). LFP battery that cannot charge below 0 °C, housed in an insulated adobe room. Uptime is the share of hours a load needed power and got it.</p>
-  <p><b>Ranked grid</b>: loads served in the community's order (pump, health post, school, homes), each allowed to drain the battery only to its cut-off. <b>Shared grid</b>: one battery for everyone; a shortage blacks out all loads together.</p>
-  <p>Altiplano Power Lab (Sripal Konchada, Atul Bhat). This interactive page was built with Claude (Anthropic) from our simulation results.</p>
+  <p><b>Method.</b> NASA POWER hourly weather (2005 to 2024) at latitude -17.77, longitude -67.44. Panel physics from pvlib (Erbs, Hay-Davies, and Faiman models). An LFP battery that cannot charge below 0 °C, kept in an insulated adobe room. Uptime is the share of hours a service needed power and got it.</p>
+  <p><b>Ranked grid:</b> services are served in the community's order (pump, clinic, school, homes), and each can drain the battery only down to its cut-off. <b>Shared grid:</b> one battery for everyone, and a shortage cuts power to all services together.</p>
+  <p>Built by Altiplano Avengers (Sripal Konchada and Atul Bhat). </p>
 </footer>
+
 </div>
 
 <script>
-const D = {"growth":{"growth":[1.0,1.05,1.1,1.15,1.2,1.25,1.3,1.35,1.4,1.45,1.5,1.55,1.6],"priority":{"crit":[100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0],"homes":[99.76,99.61,99.34,98.99,98.17,95.5,93.83,90.92,88.89,90.34,89.31,88.01,86.35],"school":[99.99,99.98,99.99,99.99,99.97,99.98,99.97,99.98,99.97,99.98,99.96,99.96,99.98]},"equal":{"crit":[99.88,99.8,99.66,99.45,99.16,98.79,97.25,95.89,94.33,92.84,91.97,92.92,91.95],"homes":[99.82,99.71,99.52,99.22,98.81,98.29,96.12,94.19,92.0,89.89,88.67,90.01,88.64],"school":[100.0,99.99,99.98,99.96,99.95,99.95,99.95,99.94,99.95,99.97,99.95,99.95,99.94]}},"floors":{"Typical year":{"floor":[10,15,20,25,30,35,40,45,50,55,60],"crit":[100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0],"homes":[99.82,99.76,99.69,99.58,98.4,95.26,90.05,90.37,85.29,85.68,80.97]},"Stress year":{"floor":[10,15,20,25,30,35,40,45,50,55,60],"crit":[99.99,100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0],"homes":[81.51,83.32,81.66,79.61,76.54,78.88,77.22,74.98,71.62,71.88,72.04]}},"shared":{"Typical year":{"critical":0.9988,"homes":0.9982},"Stress year":{"critical":0.874,"homes":0.8221}},"sizing":[{"pv":4,"b":10,"m":"p","c":3570,"k":99.97,"h":68.77},{"pv":4,"b":10,"m":"e","c":3570,"k":78.72,"h":69.96},{"pv":4,"b":20,"m":"p","c":4162,"k":99.98,"h":71.86},{"pv":4,"b":20,"m":"e","c":4162,"k":81.2,"h":73.46},{"pv":4,"b":30,"m":"p","c":4753,"k":99.99,"h":71.99},{"pv":4,"b":30,"m":"e","c":4753,"k":81.19,"h":73.46},{"pv":4,"b":40,"m":"p","c":5345,"k":99.99,"h":71.99},{"pv":4,"b":40,"m":"e","c":5345,"k":81.18,"h":73.45},{"pv":4,"b":50,"m":"p","c":5936,"k":100.0,"h":71.99},{"pv":4,"b":50,"m":"e","c":5936,"k":81.18,"h":73.45},{"pv":4,"b":60,"m":"p","c":6528,"k":100.0,"h":71.99},{"pv":4,"b":60,"m":"e","c":6528,"k":81.19,"h":73.47},{"pv":4,"b":70,"m":"p","c":7120,"k":100.0,"h":72.0},{"pv":4,"b":70,"m":"e","c":7120,"k":81.2,"h":73.47},{"pv":4,"b":80,"m":"p","c":7711,"k":100.0,"h":72.02},{"pv":4,"b":80,"m":"e","c":7711,"k":81.2,"h":73.46},{"pv":4,"b":90,"m":"p","c":8303,"k":100.0,"h":71.99},{"pv":4,"b":90,"m":"e","c":8303,"k":81.19,"h":73.46},{"pv":4,"b":100,"m":"p","c":8894,"k":100.0,"h":72.0},{"pv":4,"b":100,"m":"e","c":8894,"k":81.21,"h":73.48},{"pv":4,"b":110,"m":"p","c":9486,"k":100.0,"h":71.99},{"pv":4,"b":110,"m":"e","c":9486,"k":81.21,"h":73.49},{"pv":4,"b":120,"m":"p","c":10078,"k":100.0,"h":72.0},{"pv":4,"b":120,"m":"e","c":10078,"k":81.19,"h":73.46},{"pv":7,"b":10,"m":"p","c":3899,"k":100.0,"h":72.07},{"pv":7,"b":10,"m":"e","c":3899,"k":81.3,"h":73.61},{"pv":7,"b":20,"m":"p","c":4491,"k":100.0,"h":82.03},{"pv":7,"b":20,"m":"e","c":4491,"k":88.8,"h":84.19},{"pv":7,"b":30,"m":"p","c":5082,"k":100.0,"h":89.52},{"pv":7,"b":30,"m":"e","c":5082,"k":94.56,"h":92.32},{"pv":7,"b":40,"m":"p","c":5674,"k":100.0,"h":94.98},{"pv":7,"b":40,"m":"e","c":5674,"k":96.86,"h":95.57},{"pv":7,"b":50,"m":"p","c":6265,"k":100.0,"h":95.49},{"pv":7,"b":50,"m":"e","c":6265,"k":97.18,"h":96.01},{"pv":7,"b":60,"m":"p","c":6857,"k":100.0,"h":95.76},{"pv":7,"b":60,"m":"e","c":6857,"k":97.31,"h":96.2},{"pv":7,"b":70,"m":"p","c":7449,"k":100.0,"h":95.93},{"pv":7,"b":70,"m":"e","c":7449,"k":97.4,"h":96.33},{"pv":7,"b":80,"m":"p","c":8040,"k":100.0,"h":96.03},{"pv":7,"b":80,"m":"e","c":8040,"k":97.48,"h":96.45},{"pv":7,"b":90,"m":"p","c":8632,"k":100.0,"h":96.13},{"pv":7,"b":90,"m":"e","c":8632,"k":97.54,"h":96.53},{"pv":7,"b":100,"m":"p","c":9223,"k":100.0,"h":96.2},{"pv":7,"b":100,"m":"e","c":9223,"k":97.59,"h":96.6},{"pv":7,"b":110,"m":"p","c":9815,"k":100.0,"h":96.31},{"pv":7,"b":110,"m":"e","c":9815,"k":97.64,"h":96.68},{"pv":7,"b":120,"m":"p","c":10407,"k":100.0,"h":96.33},{"pv":7,"b":120,"m":"e","c":10407,"k":97.68,"h":96.72},{"pv":10,"b":10,"m":"p","c":4228,"k":100.0,"h":73.38},{"pv":10,"b":10,"m":"e","c":4228,"k":82.0,"h":74.59},{"pv":10,"b":20,"m":"p","c":4820,"k":100.0,"h":84.04},{"pv":10,"b":20,"m":"e","c":4820,"k":90.0,"h":85.89},{"pv":10,"b":30,"m":"p","c":5411,"k":100.0,"h":93.44},{"pv":10,"b":30,"m":"e","c":5411,"k":97.69,"h":96.74},{"pv":10,"b":40,"m":"p","c":6003,"k":100.0,"h":99.76},{"pv":10,"b":40,"m":"e","c":6003,"k":99.88,"h":99.82},{"pv":10,"b":50,"m":"p","c":6594,"k":100.0,"h":99.91},{"pv":10,"b":50,"m":"e","c":6594,"k":99.95,"h":99.93},{"pv":10,"b":60,"m":"p","c":7186,"k":100.0,"h":99.96},{"pv":10,"b":60,"m":"e","c":7186,"k":99.98,"h":99.97},{"pv":10,"b":70,"m":"p","c":7778,"k":100.0,"h":99.98},{"pv":10,"b":70,"m":"e","c":7778,"k":99.99,"h":99.99},{"pv":10,"b":80,"m":"p","c":8369,"k":100.0,"h":99.99},{"pv":10,"b":80,"m":"e","c":8369,"k":100.0,"h":99.99},{"pv":10,"b":90,"m":"p","c":8961,"k":100.0,"h":100.0},{"pv":10,"b":90,"m":"e","c":8961,"k":100.0,"h":100.0},{"pv":10,"b":100,"m":"p","c":9552,"k":100.0,"h":100.0},{"pv":10,"b":100,"m":"e","c":9552,"k":100.0,"h":100.0},{"pv":10,"b":110,"m":"p","c":10144,"k":100.0,"h":100.0},{"pv":10,"b":110,"m":"e","c":10144,"k":100.0,"h":100.0},{"pv":10,"b":120,"m":"p","c":10736,"k":100.0,"h":100.0},{"pv":10,"b":120,"m":"e","c":10736,"k":100.0,"h":100.0},{"pv":13,"b":10,"m":"p","c":4557,"k":100.0,"h":74.33},{"pv":13,"b":10,"m":"e","c":4557,"k":82.35,"h":75.08},{"pv":13,"b":20,"m":"p","c":5149,"k":100.0,"h":84.92},{"pv":13,"b":20,"m":"e","c":5149,"k":90.48,"h":86.56},{"pv":13,"b":30,"m":"p","c":5740,"k":100.0,"h":94.94},{"pv":13,"b":30,"m":"e","c":5740,"k":98.52,"h":97.91},{"pv":13,"b":40,"m":"p","c":6332,"k":100.0,"h":99.94},{"pv":13,"b":40,"m":"e","c":6332,"k":99.97,"h":99.96},{"pv":13,"b":50,"m":"p","c":6923,"k":100.0,"h":99.98},{"pv":13,"b":50,"m":"e","c":6923,"k":99.99,"h":99.98},{"pv":13,"b":60,"m":"p","c":7515,"k":100.0,"h":99.99},{"pv":13,"b":60,"m":"e","c":7515,"k":100.0,"h":99.99},{"pv":13,"b":70,"m":"p","c":8107,"k":100.0,"h":100.0},{"pv":13,"b":70,"m":"e","c":8107,"k":100.0,"h":100.0},{"pv":13,"b":80,"m":"p","c":8698,"k":100.0,"h":100.0},{"pv":13,"b":80,"m":"e","c":8698,"k":100.0,"h":100.0},{"pv":13,"b":90,"m":"p","c":9290,"k":100.0,"h":100.0},{"pv":13,"b":90,"m":"e","c":9290,"k":100.0,"h":100.0},{"pv":13,"b":100,"m":"p","c":9881,"k":100.0,"h":100.0},{"pv":13,"b":100,"m":"e","c":9881,"k":100.0,"h":100.0},{"pv":13,"b":110,"m":"p","c":10473,"k":100.0,"h":100.0},{"pv":13,"b":110,"m":"e","c":10473,"k":100.0,"h":100.0},{"pv":13,"b":120,"m":"p","c":11065,"k":100.0,"h":100.0},{"pv":13,"b":120,"m":"e","c":11065,"k":100.0,"h":100.0},{"pv":16,"b":10,"m":"p","c":4886,"k":100.0,"h":74.8},{"pv":16,"b":10,"m":"e","c":4886,"k":82.64,"h":75.49},{"pv":16,"b":20,"m":"p","c":5478,"k":100.0,"h":85.5},{"pv":16,"b":20,"m":"e","c":5478,"k":90.76,"h":86.95},{"pv":16,"b":30,"m":"p","c":6069,"k":100.0,"h":95.84},{"pv":16,"b":30,"m":"e","c":6069,"k":98.87,"h":98.4},{"pv":16,"b":40,"m":"p","c":6661,"k":100.0,"h":99.98},{"pv":16,"b":40,"m":"e","c":6661,"k":99.99,"h":99.98},{"pv":16,"b":50,"m":"p","c":7252,"k":100.0,"h":99.99},{"pv":16,"b":50,"m":"e","c":7252,"k":100.0,"h":99.99},{"pv":16,"b":60,"m":"p","c":7844,"k":100.0,"h":100.0},{"pv":16,"b":60,"m":"e","c":7844,"k":100.0,"h":100.0},{"pv":16,"b":70,"m":"p","c":8436,"k":100.0,"h":100.0},{"pv":16,"b":70,"m":"e","c":8436,"k":100.0,"h":100.0},{"pv":16,"b":80,"m":"p","c":9027,"k":100.0,"h":100.0},{"pv":16,"b":80,"m":"e","c":9027,"k":100.0,"h":100.0},{"pv":16,"b":90,"m":"p","c":9619,"k":100.0,"h":100.0},{"pv":16,"b":90,"m":"e","c":9619,"k":100.0,"h":100.0},{"pv":16,"b":100,"m":"p","c":10210,"k":100.0,"h":100.0},{"pv":16,"b":100,"m":"e","c":10210,"k":100.0,"h":100.0},{"pv":16,"b":110,"m":"p","c":10802,"k":100.0,"h":100.0},{"pv":16,"b":110,"m":"e","c":10802,"k":100.0,"h":100.0},{"pv":16,"b":120,"m":"p","c":11394,"k":100.0,"h":100.0},{"pv":16,"b":120,"m":"e","c":11394,"k":100.0,"h":100.0},{"pv":19,"b":10,"m":"p","c":5215,"k":100.0,"h":75.13},{"pv":19,"b":10,"m":"e","c":5215,"k":82.94,"h":75.91},{"pv":19,"b":20,"m":"p","c":5807,"k":100.0,"h":85.8},{"pv":19,"b":20,"m":"e","c":5807,"k":90.96,"h":87.23},{"pv":19,"b":30,"m":"p","c":6398,"k":100.0,"h":96.29},{"pv":19,"b":30,"m":"e","c":6398,"k":99.09,"h":98.72},{"pv":19,"b":40,"m":"p","c":6990,"k":100.0,"h":99.99},{"pv":19,"b":40,"m":"e","c":6990,"k":99.99,"h":99.99},{"pv":19,"b":50,"m":"p","c":7581,"k":100.0,"h":100.0},{"pv":19,"b":50,"m":"e","c":7581,"k":100.0,"h":100.0},{"pv":19,"b":60,"m":"p","c":8173,"k":100.0,"h":100.0},{"pv":19,"b":60,"m":"e","c":8173,"k":100.0,"h":100.0},{"pv":19,"b":70,"m":"p","c":8765,"k":100.0,"h":100.0},{"pv":19,"b":70,"m":"e","c":8765,"k":100.0,"h":100.0},{"pv":19,"b":80,"m":"p","c":9356,"k":100.0,"h":100.0},{"pv":19,"b":80,"m":"e","c":9356,"k":100.0,"h":100.0},{"pv":19,"b":90,"m":"p","c":9948,"k":100.0,"h":100.0},{"pv":19,"b":90,"m":"e","c":9948,"k":100.0,"h":100.0},{"pv":19,"b":100,"m":"p","c":10539,"k":100.0,"h":100.0},{"pv":19,"b":100,"m":"e","c":10539,"k":100.0,"h":100.0},{"pv":19,"b":110,"m":"p","c":11131,"k":100.0,"h":100.0},{"pv":19,"b":110,"m":"e","c":11131,"k":100.0,"h":100.0},{"pv":19,"b":120,"m":"p","c":11723,"k":100.0,"h":100.0},{"pv":19,"b":120,"m":"e","c":11723,"k":100.0,"h":100.0},{"pv":22,"b":10,"m":"p","c":5544,"k":100.0,"h":75.35},{"pv":22,"b":10,"m":"e","c":5544,"k":83.19,"h":76.26},{"pv":22,"b":20,"m":"p","c":6136,"k":100.0,"h":85.93},{"pv":22,"b":20,"m":"e","c":6136,"k":91.21,"h":87.59},{"pv":22,"b":30,"m":"p","c":6727,"k":100.0,"h":96.53},{"pv":22,"b":30,"m":"e","c":6727,"k":99.28,"h":98.98},{"pv":22,"b":40,"m":"p","c":7319,"k":100.0,"h":99.99},{"pv":22,"b":40,"m":"e","c":7319,"k":100.0,"h":100.0},{"pv":22,"b":50,"m":"p","c":7910,"k":100.0,"h":100.0},{"pv":22,"b":50,"m":"e","c":7910,"k":100.0,"h":100.0},{"pv":22,"b":60,"m":"p","c":8502,"k":100.0,"h":100.0},{"pv":22,"b":60,"m":"e","c":8502,"k":100.0,"h":100.0},{"pv":22,"b":70,"m":"p","c":9094,"k":100.0,"h":100.0},{"pv":22,"b":70,"m":"e","c":9094,"k":100.0,"h":100.0},{"pv":22,"b":80,"m":"p","c":9685,"k":100.0,"h":100.0},{"pv":22,"b":80,"m":"e","c":9685,"k":100.0,"h":100.0},{"pv":22,"b":90,"m":"p","c":10277,"k":100.0,"h":100.0},{"pv":22,"b":90,"m":"e","c":10277,"k":100.0,"h":100.0},{"pv":22,"b":100,"m":"p","c":10868,"k":100.0,"h":100.0},{"pv":22,"b":100,"m":"e","c":10868,"k":100.0,"h":100.0},{"pv":22,"b":110,"m":"p","c":11460,"k":100.0,"h":100.0},{"pv":22,"b":110,"m":"e","c":11460,"k":100.0,"h":100.0},{"pv":22,"b":120,"m":"p","c":12052,"k":100.0,"h":100.0},{"pv":22,"b":120,"m":"e","c":12052,"k":100.0,"h":100.0},{"pv":25,"b":10,"m":"p","c":5873,"k":100.0,"h":75.65},{"pv":25,"b":10,"m":"e","c":5873,"k":83.37,"h":76.52},{"pv":25,"b":20,"m":"p","c":6465,"k":100.0,"h":85.99},{"pv":25,"b":20,"m":"e","c":6465,"k":91.44,"h":87.92},{"pv":25,"b":30,"m":"p","c":7056,"k":100.0,"h":96.7},{"pv":25,"b":30,"m":"e","c":7056,"k":99.49,"h":99.27},{"pv":25,"b":40,"m":"p","c":7648,"k":100.0,"h":100.0},{"pv":25,"b":40,"m":"e","c":7648,"k":100.0,"h":100.0},{"pv":25,"b":50,"m":"p","c":8239,"k":100.0,"h":100.0},{"pv":25,"b":50,"m":"e","c":8239,"k":100.0,"h":100.0},{"pv":25,"b":60,"m":"p","c":8831,"k":100.0,"h":100.0},{"pv":25,"b":60,"m":"e","c":8831,"k":100.0,"h":100.0},{"pv":25,"b":70,"m":"p","c":9423,"k":100.0,"h":100.0},{"pv":25,"b":70,"m":"e","c":9423,"k":100.0,"h":100.0},{"pv":25,"b":80,"m":"p","c":10014,"k":100.0,"h":100.0},{"pv":25,"b":80,"m":"e","c":10014,"k":100.0,"h":100.0},{"pv":25,"b":90,"m":"p","c":10606,"k":100.0,"h":100.0},{"pv":25,"b":90,"m":"e","c":10606,"k":100.0,"h":100.0},{"pv":25,"b":100,"m":"p","c":11197,"k":100.0,"h":100.0},{"pv":25,"b":100,"m":"e","c":11197,"k":100.0,"h":100.0},{"pv":25,"b":110,"m":"p","c":11789,"k":100.0,"h":100.0},{"pv":25,"b":110,"m":"e","c":11789,"k":100.0,"h":100.0},{"pv":25,"b":120,"m":"p","c":12381,"k":100.0,"h":100.0},{"pv":25,"b":120,"m":"e","c":12381,"k":100.0,"h":100.0},{"pv":28,"b":10,"m":"p","c":6202,"k":100.0,"h":75.98},{"pv":28,"b":10,"m":"e","c":6202,"k":83.5,"h":76.71},{"pv":28,"b":20,"m":"p","c":6794,"k":100.0,"h":86.03},{"pv":28,"b":20,"m":"e","c":6794,"k":91.63,"h":88.19},{"pv":28,"b":30,"m":"p","c":7385,"k":100.0,"h":96.8},{"pv":28,"b":30,"m":"e","c":7385,"k":99.67,"h":99.54},{"pv":28,"b":40,"m":"p","c":7977,"k":100.0,"h":100.0},{"pv":28,"b":40,"m":"e","c":7977,"k":100.0,"h":100.0},{"pv":28,"b":50,"m":"p","c":8568,"k":100.0,"h":100.0},{"pv":28,"b":50,"m":"e","c":8568,"k":100.0,"h":100.0},{"pv":28,"b":60,"m":"p","c":9160,"k":100.0,"h":100.0},{"pv":28,"b":60,"m":"e","c":9160,"k":100.0,"h":100.0},{"pv":28,"b":70,"m":"p","c":9752,"k":100.0,"h":100.0},{"pv":28,"b":70,"m":"e","c":9752,"k":100.0,"h":100.0},{"pv":28,"b":80,"m":"p","c":10343,"k":100.0,"h":100.0},{"pv":28,"b":80,"m":"e","c":10343,"k":100.0,"h":100.0},{"pv":28,"b":90,"m":"p","c":10935,"k":100.0,"h":100.0},{"pv":28,"b":90,"m":"e","c":10935,"k":100.0,"h":100.0},{"pv":28,"b":100,"m":"p","c":11526,"k":100.0,"h":100.0},{"pv":28,"b":100,"m":"e","c":11526,"k":100.0,"h":100.0},{"pv":28,"b":110,"m":"p","c":12118,"k":100.0,"h":100.0},{"pv":28,"b":110,"m":"e","c":12118,"k":100.0,"h":100.0},{"pv":28,"b":120,"m":"p","c":12710,"k":100.0,"h":100.0},{"pv":28,"b":120,"m":"e","c":12710,"k":100.0,"h":100.0},{"pv":31,"b":10,"m":"p","c":6531,"k":100.0,"h":76.25},{"pv":31,"b":10,"m":"e","c":6531,"k":83.63,"h":76.89},{"pv":31,"b":20,"m":"p","c":7123,"k":100.0,"h":86.06},{"pv":31,"b":20,"m":"e","c":7123,"k":91.77,"h":88.38},{"pv":31,"b":30,"m":"p","c":7714,"k":100.0,"h":96.9},{"pv":31,"b":30,"m":"e","c":7714,"k":99.8,"h":99.72},{"pv":31,"b":40,"m":"p","c":8306,"k":100.0,"h":100.0},{"pv":31,"b":40,"m":"e","c":8306,"k":100.0,"h":100.0},{"pv":31,"b":50,"m":"p","c":8897,"k":100.0,"h":100.0},{"pv":31,"b":50,"m":"e","c":8897,"k":100.0,"h":100.0},{"pv":31,"b":60,"m":"p","c":9489,"k":100.0,"h":100.0},{"pv":31,"b":60,"m":"e","c":9489,"k":100.0,"h":100.0},{"pv":31,"b":70,"m":"p","c":10081,"k":100.0,"h":100.0},{"pv":31,"b":70,"m":"e","c":10081,"k":100.0,"h":100.0},{"pv":31,"b":80,"m":"p","c":10672,"k":100.0,"h":100.0},{"pv":31,"b":80,"m":"e","c":10672,"k":100.0,"h":100.0},{"pv":31,"b":90,"m":"p","c":11264,"k":100.0,"h":100.0},{"pv":31,"b":90,"m":"e","c":11264,"k":100.0,"h":100.0},{"pv":31,"b":100,"m":"p","c":11855,"k":100.0,"h":100.0},{"pv":31,"b":100,"m":"e","c":11855,"k":100.0,"h":100.0},{"pv":31,"b":110,"m":"p","c":12447,"k":100.0,"h":100.0},{"pv":31,"b":110,"m":"e","c":12447,"k":100.0,"h":100.0},{"pv":31,"b":120,"m":"p","c":13039,"k":100.0,"h":100.0},{"pv":31,"b":120,"m":"e","c":13039,"k":100.0,"h":100.0}],"mc":{"priority":{"median":1.0,"p5":0.9397,"min":0.8877,"no_failure_min":1.0,"no_failure_median":1.0,"school_median":1.0,"homes_median":0.905},"equal":{"median":0.9524,"p5":0.8875,"min":0.813,"no_failure_min":0.8783,"no_failure_median":0.957,"school_median":1.0,"homes_median":0.9334},"backup":{"median":1.0,"p5":1.0,"min":1.0,"no_failure_min":1.0,"no_failure_median":1.0,"school_median":1.0,"homes_median":0.905},"runs_with_inverter_failure":99,"corr_equal_crit_vs_growth":-0.912},"housing":{"Outdoor metal cabinet":520,"Insulated adobe room":1,"Earth vault (1 m deep)":0},"econ":{"solar_capex":43021,"solar_lcoe":0.438,"diesel_lcoe":1.0,"diesel_liters_avoided_per_yr":6190,"co2_avoided_t_per_yr":16.6,"capex_per_household":717,"breakeven_diesel_price":0.4}};
+const D = {
+"growth":{"growth":[1.0,1.05,1.1,1.15,1.2,1.25,1.3,1.35,1.4,1.45,1.5,1.55,1.6],
+ "priority":{"crit":[100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0],"homes":[99.76,99.61,99.34,98.99,98.17,95.5,93.83,90.92,88.89,90.34,89.31,88.01,86.35]},
+ "equal":{"crit":[99.88,99.8,99.66,99.45,99.16,98.79,97.25,95.89,94.33,92.84,91.97,92.92,91.95],"homes":[99.82,99.71,99.52,99.22,98.81,98.29,96.12,94.19,92.0,89.89,88.67,90.01,88.64]}},
+"floors":{
+ "Typical year":{"floor":[10,15,20,25,30,35,40,45,50,55,60],"crit":[100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0],"homes":[99.82,99.76,99.69,99.58,98.4,95.26,90.05,90.37,85.29,85.68,80.97]},
+ "Stress year":{"floor":[10,15,20,25,30,35,40,45,50,55,60],"crit":[99.99,100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0,100.0],"homes":[81.51,83.32,81.66,79.61,76.54,78.88,77.22,74.98,71.62,71.88,72.04]}},
+"shared":{"Typical year":{"critical":0.9988,"homes":0.9982},"Stress year":{"critical":0.874,"homes":0.8221}},
+"mc":{"priority":{"p5":0.9397},"equal":{"p5":0.8875},"backup":{"p5":1.0}},
+"housing":{"Outdoor metal cabinet":520,"Insulated adobe room":41,"Earth vault (1 m deep)":0},
+"econ":{"solar_lcoe":0.438,"diesel_lcoe":1.0}
+};
+
+const F = [100, 100, 100, 100];
+const SZ = {
+ 4: [[99.97,68.77,78.72,69.96],[99.98,71.86,81.2,73.46],[99.99,71.99,81.19,73.46],[99.99,71.99,81.18,73.45],[100,71.99,81.18,73.45],[100,71.99,81.19,73.47],[100,72.0,81.2,73.47],[100,72.02,81.2,73.46],[100,71.99,81.19,73.46],[100,72.0,81.21,73.48],[100,71.99,81.21,73.49],[100,72.0,81.19,73.46]],
+ 7: [[100,72.07,81.3,73.61],[100,82.03,88.8,84.19],[100,89.52,94.56,92.32],[100,94.98,96.86,95.57],[100,95.49,97.18,96.01],[100,95.76,97.31,96.2],[100,95.93,97.4,96.33],[100,96.03,97.48,96.45],[100,96.13,97.54,96.53],[100,96.2,97.59,96.6],[100,96.31,97.64,96.68],[100,96.33,97.68,96.72]],
+ 10: [[100,73.38,82.0,74.59],[100,84.04,90.0,85.89],[100,93.44,97.69,96.74],[100,99.76,99.88,99.82],[100,99.91,99.95,99.93],[100,99.96,99.98,99.97],[100,99.98,99.99,99.99],[100,99.99,100,99.99],F,F,F,F],
+ 13: [[100,74.33,82.35,75.08],[100,84.92,90.48,86.56],[100,94.94,98.52,97.91],[100,99.94,99.97,99.96],[100,99.98,99.99,99.98],[100,99.99,100,99.99],F,F,F,F,F,F],
+ 16: [[100,74.8,82.64,75.49],[100,85.5,90.76,86.95],[100,95.84,98.87,98.4],[100,99.98,99.99,99.98],[100,99.99,100,99.99],F,F,F,F,F,F,F],
+ 19: [[100,75.13,82.94,75.91],[100,85.8,90.96,87.23],[100,96.29,99.09,98.72],[100,99.99,99.99,99.99],F,F,F,F,F,F,F,F],
+ 22: [[100,75.35,83.19,76.26],[100,85.93,91.21,87.59],[100,96.53,99.28,98.98],[100,99.99,100,100],F,F,F,F,F,F,F,F],
+ 25: [[100,75.65,83.37,76.52],[100,85.99,91.44,87.92],[100,96.7,99.49,99.27],F,F,F,F,F,F,F,F,F],
+ 28: [[100,75.98,83.5,76.71],[100,86.03,91.63,88.19],[100,96.8,99.67,99.54],F,F,F,F,F,F,F,F,F],
+ 31: [[100,76.25,83.63,76.89],[100,86.06,91.77,88.38],[100,96.9,99.8,99.72],F,F,F,F,F,F,F,F,F]
+};
+
 const $ = id => document.getElementById(id);
 const pct = v => (v >= 99.995 ? '100' : v.toFixed(1)) + '%';
 const NS = 'http://www.w3.org/2000/svg';
@@ -233,7 +221,6 @@ function el(tag, attrs, parent) {
   return e;
 }
 
-/* One small line-chart renderer shared by all three experiments. */
 function lineChart(svg, o) {
   svg.textContent = '';
   const W = 560, H = 320, m = { l: 46, r: 14, t: 12, b: 42 };
@@ -241,25 +228,24 @@ function lineChart(svg, o) {
   const y = v => m.t + (o.y1 - v) / (o.y1 - o.y0) * (H - m.t - m.b);
   o.yt.forEach(t => {
     el('line', { x1: m.l, x2: W - m.r, y1: y(t), y2: y(t), class: 'grid-l' }, svg);
-    el('text', { x: m.l - 8, y: y(t) + 4, 'text-anchor': 'end', class: 'axis-t' }, svg).textContent = t + '%';
+    el('text', { x: m.l - 8, y: y(t) + 4, 'text-anchor': 'end' }, svg).textContent = t + '%';
   });
   o.xt.forEach(t => {
-    el('text', { x: x(t), y: H - m.b + 18, 'text-anchor': 'middle', class: 'axis-t' }, svg).textContent = o.xf(t);
+    el('text', { x: x(t), y: H - m.b + 18, 'text-anchor': 'middle' }, svg).textContent = o.xf(t);
   });
   el('text', { x: m.l + (W - m.l - m.r) / 2, y: H - 6, 'text-anchor': 'middle' }, svg).textContent = o.xlabel;
   (o.hlines || []).forEach(h => {
     el('line', { x1: m.l, x2: W - m.r, y1: y(h.v), y2: y(h.v), stroke: css(h.c), 'stroke-width': 2, 'stroke-dasharray': '6 5' }, svg);
   });
-  el('line', { x1: x(o.mark), x2: x(o.mark), y1: m.t, y2: H - m.b, stroke: css('--sun'), 'stroke-width': 1.5 }, svg);
+  el('line', { x1: x(o.mark), x2: x(o.mark), y1: m.t, y2: H - m.b, stroke: css('--mark'), 'stroke-width': 1.5 }, svg);
   o.series.forEach(s => {
     const d = s.xs.map((v, i) => (i ? 'L' : 'M') + x(v).toFixed(1) + ' ' + y(Math.max(o.y0, s.ys[i])).toFixed(1)).join(' ');
     el('path', { d, fill: 'none', stroke: css(s.c), 'stroke-width': 2.5, 'stroke-linejoin': 'round', 'stroke-dasharray': s.dash ? '7 5' : 'none' }, svg);
     const i = s.xs.indexOf(o.mark);
-    if (i >= 0) el('circle', { cx: x(o.mark), cy: y(Math.max(o.y0, s.ys[i])), r: 5.5, fill: css(s.c), stroke: css('--surface'), 'stroke-width': 2 }, svg);
+    if (i >= 0) el('circle', { cx: x(o.mark), cy: y(Math.max(o.y0, s.ys[i])), r: 5.5, fill: css(s.c), stroke: css('--paper'), 'stroke-width': 2 }, svg);
   });
 }
 
-/* Experiment 1 */
 const GX = D.growth.growth.map(g => Math.round((g - 1) * 100));
 function drawGrowth() {
   const v = +$('g').value, i = GX.indexOf(v), P = D.growth.priority, E = D.growth.equal;
@@ -279,33 +265,34 @@ function drawGrowth() {
   });
 }
 
-/* Experiment 2 */
 let scen = 'Stress year';
 function drawFloor() {
-  const v = +$('f').value, F = D.floors[scen], i = F.floor.indexOf(v), S = D.shared[scen];
+  const v = +$('f').value, FL = D.floors[scen], i = FL.floor.indexOf(v), S = D.shared[scen];
   $('f-out').textContent = v + '%';
-  $('f-c').textContent = pct(F.crit[i]); $('f-h').textContent = pct(F.homes[i]);
+  $('f-c').textContent = pct(FL.crit[i]); $('f-h').textContent = pct(FL.homes[i]);
   $('f-sc').textContent = pct(S.critical * 100); $('f-sh').textContent = pct(S.homes * 100);
-  const best = F.floor[F.homes.indexOf(Math.max(...F.homes.filter((h, j) => F.crit[j] >= 99.99)))];
-  const diff = F.homes[i] - S.homes * 100;
+  const best = FL.floor[FL.homes.indexOf(Math.max(...FL.homes.filter((h, j) => FL.crit[j] >= 99.99)))];
+  const diff = FL.homes[i] - S.homes * 100;
   let msg = v === best ? 'This is the best level: the pump and clinic stay fully powered and homes get the most power. ' : 'Homes do best at ' + best + '%. ';
-  msg += 'Compared with a shared grid, homes are ' + (diff >= 0 ? Math.abs(diff).toFixed(1) + ' points better off' : Math.abs(diff).toFixed(1) + ' points worse off') + ' here.';
+  msg += 'Compared with a shared grid, homes are ' + Math.abs(diff).toFixed(1) + (diff >= 0 ? ' points better off' : ' points worse off') + ' here.';
   $('f-say').textContent = msg;
   const lo = scen === 'Stress year' ? 68 : 78;
   lineChart($('f-svg'), {
     x0: 10, x1: 60, y0: lo, y1: 100, yt: scen === 'Stress year' ? [68, 76, 84, 92, 100] : [78, 84, 90, 96, 100],
     xt: [10, 20, 30, 40, 50, 60], xf: t => t + '%', xlabel: 'Battery level where homes are cut off', mark: v,
     hlines: [{ v: S.homes * 100, c: '--shared' }],
-    series: [{ xs: F.floor, ys: F.homes, c: '--homes' }]
+    series: [{ xs: FL.floor, ys: FL.homes, c: '--homes' }]
   });
 }
-$('sc-typ').onclick = () => { scen = 'Typical year'; $('sc-typ').setAttribute('aria-pressed', 'true'); $('sc-str').setAttribute('aria-pressed', 'false'); drawFloor(); };
-$('sc-str').onclick = () => { scen = 'Stress year'; $('sc-str').setAttribute('aria-pressed', 'true'); $('sc-typ').setAttribute('aria-pressed', 'false'); drawFloor(); };
+document.querySelectorAll('input[name=sc]').forEach(r => r.addEventListener('change', () => { scen = r.value; drawFloor(); }));
 
-/* Experiment 3 */
-const PVS = [...new Set(D.sizing.map(r => r.pv))].sort((a, b) => a - b);
-const BS = [...new Set(D.sizing.map(r => r.b))].sort((a, b) => a - b);
-const row = (pv, b, m) => D.sizing.find(r => r.pv === pv && r.b === b && r.m === m);
+const PVS = Object.keys(SZ).map(Number).sort((a, b) => a - b);
+const BS = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120];
+function row(pv, b, m) {
+  const r = SZ[pv][BS.indexOf(b)];
+  const c = Math.round(3570 + 329 * (pv - 4) / 3 + 59.16 * (b - 10));
+  return m === 'p' ? { c, k: r[0], h: r[1] } : { c, k: r[2], h: r[3] };
+}
 function drawSize() {
   const pv = PVS[+$('pv').value], b = BS[+$('b').value];
   $('pv-out').textContent = pv + ' kW'; $('b-out').textContent = b + ' kWh';
@@ -316,7 +303,7 @@ function drawSize() {
   $('s-say').textContent = (pv === 10 && b === 40)
     ? 'Our design: the cheapest of all 120 sizes that keeps the pump and clinic on 99.5% of hours and homes on 95%.'
     : ok ? 'This size meets both targets, but costs $' + (p.c - row(10, 40, 'p').c).toLocaleString() + ' more per year than our design.'
-         : 'This size misses a target: we require pump + clinic at 99.5% or more and homes at 95% or more.';
+         : 'This size misses a target. We require the pump and clinic at 99.5% or more and homes at 95% or more.';
   const crR = BS.map(x => row(pv, x, 'p').k), crE = BS.map(x => row(pv, x, 'e').k);
   const lo = Math.max(0, Math.floor(Math.min(...crE, ...crR) / 10) * 10);
   const step = (100 - lo) / 4;
@@ -328,14 +315,13 @@ function drawSize() {
 }
 $('s-reset').onclick = () => { $('pv').value = PVS.indexOf(10); $('b').value = BS.indexOf(40); drawSize(); };
 
-/* Static evidence */
 function bars(title, rows, max, fmt, note) {
-  const w = document.createElement('div'); w.className = 'ev';
+  const w = document.createElement('div');
   w.innerHTML = '<h3>' + title + '</h3><div class="bars"></div>' + (note ? '<p class="verdict">' + note + '</p>' : '');
   const box = w.querySelector('.bars');
   rows.forEach(r => {
     const d = document.createElement('div'); d.className = 'bar';
-    d.innerHTML = '<span>' + r[0] + '</span><span class="track"><span class="fill" style="display:block;width:' + Math.max(1, r[1] / max * 100) + '%;background:var(' + r[2] + ')"></span></span><span class="n">' + fmt(r[1]) + '</span>';
+    d.innerHTML = '<span>' + r[0] + '</span><span class="track"><span class="fill" style="width:' + Math.max(1, r[1] / max * 100) + '%;background:var(' + r[2] + ')"></span></span><span class="n">' + fmt(r[1]) + '</span>';
     box.appendChild(d);
   });
   return w;
@@ -344,20 +330,17 @@ const ev = $('ev'), mc = D.mc, hz = D.housing, ec = D.econ;
 ev.appendChild(bars('Pump + clinic, worst 5% of 1,000 futures', [
   ['Shared grid', mc.equal.p5 * 100, '--shared'], ['Ranked', mc.priority.p5 * 100, '--ranked'],
   ['Ranked + backup', mc.backup.p5 * 100, '--ranked']], 100, pct,
-  'Random weather, dust, aging, demand growth and inverter breakdowns. A $600 backup inverter on the pump and clinic closes the last gap.'));
+  'Random weather, dust, aging, demand growth, and inverter breakdowns. A $600 backup inverter on the pump and clinic closes the last gap.'));
 ev.appendChild(bars('Battery hours per year below 0 °C', [
   ['Metal cabinet', hz['Outdoor metal cabinet'], '--shared'], ['Adobe room', hz['Insulated adobe room'], '--homes'],
   ['Earth vault', hz['Earth vault (1 m deep)'], '--ranked']], hz['Outdoor metal cabinet'], v => Math.round(v).toLocaleString(),
-  'Lithium batteries cannot safely charge below freezing. Housing them in an insulated adobe room solves it.'));
+  'Lithium batteries cannot safely charge below freezing. An insulated adobe room keeps the battery warm enough.'));
 ev.appendChild(bars('Cost per kWh over 20 years', [
   ['Diesel', ec.diesel_lcoe, '--shared'], ['Solar (ours)', ec.solar_lcoe, '--ranked']], ec.diesel_lcoe, v => '$' + v.toFixed(2),
-  'Diesel at Bolivia’s Sept 2026 price of about $1.63 per liter, plus hauling. Solar includes a battery replacement at year 10.'));
+  'Diesel at the September 2026 Bolivian price of about $1.63 per liter, plus hauling. Solar includes a battery replacement at year 10.'));
 
 ['g', 'f', 'pv', 'b'].forEach(id => $(id).addEventListener('input', () => ({ g: drawGrowth, f: drawFloor, pv: drawSize, b: drawSize })[id]()));
-function all() { drawGrowth(); drawFloor(); drawSize(); }
-all();
-matchMedia('(prefers-color-scheme: dark)').addEventListener('change', all);
-new MutationObserver(all).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+drawGrowth(); drawFloor(); drawSize();
 </script>
 
 </body>
